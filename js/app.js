@@ -11,12 +11,13 @@ let aiDataDisplay = (infos) => {
         let aiCard = document.createElement("div");
         aiCard.classList.add("col");
         aiCard.innerHTML = `
-        <div class="card h-100">
+        <div class="card h-100 container">
             <img src="..." class="card-img-top" alt="...">
             <div class="card-body">
-                <h5 class="card-title">Card title</h5>
-                <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                <h5 class="card-title">${info.name}</h5>
+                <p class="card-text">${info.description}</p>
             </div>
+            <hr/>
             <div class="card-footer">
                 <small class="text-body-secondary">Last updated 3 mins ago</small>
             </div>
