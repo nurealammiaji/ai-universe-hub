@@ -8,7 +8,6 @@ let aiDataDisplay = (infos) => {
     infos = infos.slice(0, 6);
     let aiCardDiv = document.getElementById("ai-card-div");
     infos.map(info => {
-        console.log(info);
         let aiCard = document.createElement("div");
         aiCard.classList.add("col");
         aiCard.innerHTML = `
@@ -30,30 +29,41 @@ let aiDataDisplay = (infos) => {
             </svg> ${info.published_in}</small>
                 </div>
             <!-- Button trigger modal -->
-                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-                <svg id="i-arrow-right" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
-                <path d="M22 6 L30 16 22 26 M30 16 L2 16" />
-            </svg>
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop" onclick="modalDataLoad('${info.id}')">
+                    <svg id="i-arrow-right" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+                    <path d="M22 6 L30 16 22 26 M30 16 L2 16" /></svg>
                 </button>
-                <!-- Modal -->
-                <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                    <div class="modal-dialog modal-dialog-centered">
-                        <div class="modal-content">
-                            <div class="text-end">
-                                <button type="button" class="btn-close bg-danger" data-bs-dismiss="modal" aria-label="Close"></button>
-                            </div>
-                            <div class="modal-body p-3">
-                                ...
-                            </div>
-                        </div>
-                    </div>
-                </div>
             </div>
         </div>
         `;
         aiCardDiv.appendChild(aiCard);
 
     })
+}
+
+let modalDataLoad = (id) => {
+    fetch(`https://openapi.programming-hero.com/api/ai/tool/${id}`)
+    .then(res => res.json())
+    .then(data => modalDataDisplay(data.data));
+}
+
+let modalDataDisplay = (data) => {
+    console.log(data);
+    let modalBody = document.getElementById("modal-body");
+    modalBody.innerText = '';
+    let modalBodyCard = document.createElement("div");
+    modalBodyCard.innerHTML = `
+    <div>
+        <div class="card" style="width: 18rem;">
+            <img src="${data.image_link[1] ? data.image_link[0] : data.logo}" class="p-2 card-img-top" alt="...">
+            <div class="card-body text-center">
+                <h4>${data.input_output_examples[0].input}</h4>
+                <p class="card-text">${data.input_output_examples[0].output}</p>
+            </div>
+        </div>
+    </div>
+    `;
+    modalBody.appendChild(modalBodyCard);
 }
 
 aiDataLoad();
