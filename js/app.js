@@ -5,6 +5,7 @@ let aiDataLoad = () => {
 }
 
 let aiDataDisplay = (infos) => {
+    infos = infos.slice(0, 6);
     let aiCardDiv = document.getElementById("ai-card-div");
     infos.map(info => {
         console.log(info);
@@ -18,7 +19,7 @@ let aiDataDisplay = (infos) => {
                 <ol>
                     <li>${info.features[0]}</li>
                     <li>${info.features[1]}</li>
-                    <li>${info.features[2]}</li>
+                    <li>${info.features[2] ? info.features[2] : 'None'}</li>
                 </ol>
             </div>
             <div class="card-footer d-flex align-items-center justify-content-between">
