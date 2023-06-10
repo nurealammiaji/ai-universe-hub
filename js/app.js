@@ -5,6 +5,7 @@ let aiDataLoad = () => {
 }
 
 let aiDataDisplay = (infos) => {
+    let loader = document.getElementById("loader");
     infos = infos.slice(0, 6);
     let aiCardDiv = document.getElementById("ai-card-div");
     infos.map(info => {
@@ -18,7 +19,7 @@ let aiDataDisplay = (infos) => {
                 <ol>
                     <li>${info.features[0]}</li>
                     <li>${info.features[1]}</li>
-                    <li>${info.features[2] ? info.features[2] : 'None'}</li>
+                    <li>${info.features[2] ? info.features[2] : 'No Data Found'}</li>
                 </ol>
             </div>
             <div class="card-footer d-flex align-items-center justify-content-between">
@@ -37,7 +38,7 @@ let aiDataDisplay = (infos) => {
         </div>
         `;
         aiCardDiv.appendChild(aiCard);
-
+        loader.classList.add("d-none");
     })
 }
 
@@ -53,12 +54,55 @@ let modalDataDisplay = (data) => {
     modalBody.innerText = '';
     let modalBodyCard = document.createElement("div");
     modalBodyCard.innerHTML = `
-    <div>
-        <div class="card" style="width: 18rem;">
-            <img src="${data.image_link[1] ? data.image_link[0] : data.logo}" class="p-2 card-img-top" alt="...">
-            <div class="card-body text-center">
-                <h4>${data.input_output_examples[0].input}</h4>
-                <p class="card-text">${data.input_output_examples[0].output}</p>
+    <div class="row">
+        <div class="col-sm-6 mb-3 mb-sm-0 gap-3">
+            <div class="card p-3">
+                <h6>${data.description}</h6>
+                <div class="d-flex justify-content-evenly align-items-center">
+                    <div class="text-center">
+                        <p>${data.pricing[0].price}<br/>${data.pricing[0].plan}</p>
+                    </div>
+                    <div>
+                        <p>${data.pricing[1].price}<br/>${data.pricing[1].plan}</p>
+                    </div>
+                    <div>
+                        <p>${data.pricing[2].price}<br/>${data.pricing[2].plan}</p>
+                    </div>
+                </div>
+                <div class="d-flex gap-3">
+                    <div>
+                        <p>Features:</p>
+                        <small>
+                            <ul>
+                                <li>${data.features[1].feature_name}</li>
+                                <li>${data.features[2].feature_name}</li>
+                                <li>${data.features[3].feature_name}</li>
+                            </ul>
+                        </small>
+                    </div>
+                    <div>
+                    <p>Integrations:</p>
+                    <small>
+                        <ul>
+                            <li>${data.integrations[1]}</li>
+                            <li>${data.integrations[2]}</li>
+                            <li>${data.integrations[3] ? data.integrations[3] : 'No Data Found'}</li>
+                        </ul>
+                    </small>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6">
+            <div class="card">
+                <div class="card-body">
+                <span class="position-absolute end-0 top-75 translate-middle badge rounded-pill bg-danger">${data.accuracy.score * 100}% accuracy</span>
+                    <img src="${data.image_link[1] ? data.image_link[0] : data.logo}" class="card-img-top img-fluid" alt="...">
+                    <div class="card-body text-center">
+                        <h4>${data.input_output_examples[0].input}</h4>
+                        <p class="card-text">${data.input_output_examples[0].output}</p>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
