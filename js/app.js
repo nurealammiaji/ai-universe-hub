@@ -1,12 +1,17 @@
-let aiDataLoad = () => {
+let aiDataLoad = (more) => {
     fetch('https://openapi.programming-hero.com/api/ai/tools')
     .then(res => res.json())
-    .then(data => aiDataDisplay(data.data.tools))
+    .then(data => aiDataDisplay(data.data.tools, more))
 }
 
-let aiDataDisplay = (infos) => {
+let aiDataDisplay = (infos, more) => {
     let loader = document.getElementById("loader");
-    infos = infos.slice(0, 6);
+    if (more === false) {
+        infos = infos.slice(0, 6);
+    }
+    else {
+        infos = infos.slice(0);
+    }
     let aiCardDiv = document.getElementById("ai-card-div");
     infos.map(info => {
         let aiCard = document.createElement("div");
@@ -56,22 +61,24 @@ let modalDataDisplay = (data) => {
     modalBodyCard.innerHTML = `
     <div class="row">
         <div class="col-sm-6 mb-3 mb-sm-0 gap-3">
-            <div class="card p-3">
-                <h6>${data.description}</h6>
-                <div class="d-flex justify-content-evenly align-items-center">
-                    <div class="text-center">
-                        <p>${data.pricing[0].price}<br/>${data.pricing[0].plan}</p>
-                    </div>
-                    <div>
-                        <p>${data.pricing[1].price}<br/>${data.pricing[1].plan}</p>
-                    </div>
-                    <div>
-                        <p>${data.pricing[2].price}<br/>${data.pricing[2].plan}</p>
+            <div class="card p-3 bg-danger bg-opacity-10 border-danger">
+                <h4>${data.description}</h4>
+                <div class="container text-center">
+                    <div class="row">
+                        <div class="col p-3 m-3 rounded-4 bg-white text-success fw-bold">
+                        ${data.pricing[0].price}<br/>${data.pricing[0].plan}
+                        </div>
+                        <div class="col p-3 m-3 rounded-4 bg-white text-warning fw-bold">
+                        ${data.pricing[1].price}<br/>${data.pricing[1].plan}
+                        </div>
+                        <div class="col p-3 m-3 rounded-4 bg-white text-danger fw-bold">
+                        ${data.pricing[2].price}<br/>${data.pricing[2].plan}
+                        </div>
                     </div>
                 </div>
-                <div class="d-flex gap-3">
+                <div class="d-flex justify-content-evenly">
                     <div>
-                        <p>Features:</p>
+                        <h6>Features:</h6>
                         <small>
                             <ul>
                                 <li>${data.features[1].feature_name}</li>
@@ -81,7 +88,7 @@ let modalDataDisplay = (data) => {
                         </small>
                     </div>
                     <div>
-                    <p>Integrations:</p>
+                    <h6>Integrations:</h6>
                     <small>
                         <ul>
                             <li>${data.integrations[1]}</li>
@@ -110,4 +117,14 @@ let modalDataDisplay = (data) => {
     modalBody.appendChild(modalBodyCard);
 }
 
-aiDataLoad();
+aiDataLoad(false);
+
+document.getElementById("load-more").addEventListener("click", function() {
+    let loader = document.getElementById("loader");
+    loader.classList.remove("d-none");
+    let aiCardDiv = document.getElementById("ai-card-div");
+    aiCardDiv.innerText = "";
+    aiDataLoad(true);
+    let loadMore = document.getElementById("load-more");
+    loadMore.classList.add("d-none");
+})
