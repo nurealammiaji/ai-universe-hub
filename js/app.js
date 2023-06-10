@@ -61,8 +61,9 @@ let modalDataDisplay = (data) => {
     modalBodyCard.innerHTML = `
     <div class="row">
         <div class="col-sm-6 mb-3 mb-sm-0 gap-3">
-            <div class="card p-3 bg-danger bg-opacity-10 border-danger">
+            <div class="card p-3 bg-danger bg-opacity-10 border-danger" style="min-height: 450px">
                 <h4>${data.description}</h4>
+                <br/>
                 <div class="container text-center">
                     <div class="row">
                         <div class="col p-3 m-3 rounded-4 bg-white text-success fw-bold">
@@ -76,6 +77,7 @@ let modalDataDisplay = (data) => {
                         </div>
                     </div>
                 </div>
+                <br/>
                 <div class="d-flex justify-content-evenly">
                     <div>
                         <h6>Features:</h6>
@@ -91,8 +93,8 @@ let modalDataDisplay = (data) => {
                     <h6>Integrations:</h6>
                     <small>
                         <ul>
-                            <li>${data.integrations[1]}</li>
-                            <li>${data.integrations[2]}</li>
+                            <li>${data.integrations[1] ? data.integrations[0] : 'No Data Found'}</li>
+                            <li>${data.integrations[2] ? data.integrations[1] : 'No Data Found'}</li>
                             <li>${data.integrations[3] ? data.integrations[3] : 'No Data Found'}</li>
                         </ul>
                     </small>
@@ -101,7 +103,7 @@ let modalDataDisplay = (data) => {
             </div>
         </div>
         <div class="col-sm-6">
-            <div class="card">
+            <div class="card" style="min-height: 450px">
                 <div class="card-body">
                 <span class="position-absolute end-0 top-75 translate-middle badge rounded-pill bg-danger">${data.accuracy.score * 100}% accuracy</span>
                     <img src="${data.image_link[1] ? data.image_link[0] : data.logo}" class="card-img-top img-fluid" alt="...">
