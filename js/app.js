@@ -105,7 +105,7 @@ let modalDataDisplay = (data) => {
         <div class="col-sm-6">
             <div class="card" style="min-height: 450px">
                 <div class="card-body">
-                <span class="position-absolute end-0 top-75 translate-middle badge rounded-pill bg-danger">${data.accuracy.score * 100}% accuracy</span>
+                <span id="badge" class="d-none position-absolute end-0 top-75 translate-middle badge rounded-pill bg-danger">${data.accuracy.score * 100}% accuracy</span>
                     <img src="${data.image_link[1] ? data.image_link[0] : data.logo}" class="card-img-top img-fluid" alt="...">
                     <div class="card-body text-center">
                         <h4>${data.input_output_examples[0].input}</h4>
@@ -117,6 +117,13 @@ let modalDataDisplay = (data) => {
     </div>
     `;
     modalBody.appendChild(modalBodyCard);
+    let badge = document.getElementById("badge");
+    if (data.accuracy.score <= 0.0) {
+        badge.classList.add("d-none");
+    }
+    else {
+        badge.classList.remove("d-none");
+    }
 }
 
 aiDataLoad(false);
