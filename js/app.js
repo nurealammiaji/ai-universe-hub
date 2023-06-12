@@ -24,7 +24,7 @@ let aiDataDisplay = (infos, more) => {
                 <ol>
                     <li>${info.features[0]}</li>
                     <li>${info.features[1]}</li>
-                    <li>${info.features[2] ? info.features[2] : 'No Data Found'}</li>
+                    <li>${info.features[2] ? info.features[2] : 'Not Found'}</li>
                 </ol>
             </div>
             <div class="card-footer d-flex align-items-center justify-content-between">
@@ -57,6 +57,12 @@ let modalDataDisplay = (data) => {
     console.log(data);
     let modalBody = document.getElementById("modal-body");
     modalBody.innerText = '';
+    if (data.pricing[0].price === '0') {
+        price = 'No Cost';
+    }
+    else {
+        price = data.pricing[0].price;
+    }
     let modalBodyCard = document.createElement("div");
     modalBodyCard.innerHTML = `
     <div class="row">
@@ -67,7 +73,7 @@ let modalDataDisplay = (data) => {
                 <div class="container text-center">
                     <div class="row">
                         <div class="col p-3 m-3 rounded-4 bg-white text-success fw-bold">
-                        ${data.pricing[0].price}<br/>${data.pricing[0].plan}
+                        ${price}<br/>${data.pricing[0].plan}
                         </div>
                         <div class="col p-3 m-3 rounded-4 bg-white text-warning fw-bold">
                         ${data.pricing[1].price}<br/>${data.pricing[1].plan}
@@ -93,9 +99,9 @@ let modalDataDisplay = (data) => {
                     <h6>Integrations:</h6>
                     <small>
                         <ul>
-                            <li>${data.integrations[1] ? data.integrations[0] : 'No Data Found'}</li>
-                            <li>${data.integrations[2] ? data.integrations[1] : 'No Data Found'}</li>
-                            <li>${data.integrations[3] ? data.integrations[3] : 'No Data Found'}</li>
+                            <li>${data.integrations[1] ? data.integrations[0] : 'Not Found'}</li>
+                            <li>${data.integrations[2] ? data.integrations[1] : 'Not Found'}</li>
+                            <li>${data.integrations[3] ? data.integrations[3] : 'Not Found'}</li>
                         </ul>
                     </small>
                     </div>
